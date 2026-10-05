@@ -7,6 +7,10 @@ project(
     LANGUAGES CXX
 )
 
+# --------------------------------------------------
+# C++ configuration
+# --------------------------------------------------
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -65,7 +69,7 @@ target_link_libraries(
 )
 
 # --------------------------------------------------
-# Testing
+# Testing dependencies
 # --------------------------------------------------
 
 include(FetchContent)
@@ -89,6 +93,10 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
+# --------------------------------------------------
+# Product tests
+# --------------------------------------------------
+
 add_executable(
     ProductTests
     tests/ProductTests.cpp
@@ -101,6 +109,27 @@ target_link_libraries(
         GTest::gtest_main
 )
 
+# --------------------------------------------------
+# InventoryService tests
+# --------------------------------------------------
+
+add_executable(
+    InventoryServiceTests
+    tests/InventoryServiceTests.cpp
+)
+
+target_link_libraries(
+    InventoryServiceTests
+    PRIVATE
+        inventory_core
+        GTest::gtest_main
+)
+
+# --------------------------------------------------
+# Test discovery
+# --------------------------------------------------
+
 include(GoogleTest)
 
 gtest_discover_tests(ProductTests)
+gtest_discover_tests(InventoryServiceTests)
