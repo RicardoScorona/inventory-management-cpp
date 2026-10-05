@@ -139,6 +139,22 @@ target_link_libraries(
 )
 
 # --------------------------------------------------
+# SQLite repository integration tests
+# --------------------------------------------------
+
+add_executable(
+    SQLiteProductRepositoryTests
+    tests/SQLiteProductRepositoryTests.cpp
+)
+
+target_link_libraries(
+    SQLiteProductRepositoryTests
+    PRIVATE
+        inventory_core
+        GTest::gtest_main
+)
+
+# --------------------------------------------------
 # Test discovery
 # --------------------------------------------------
 
@@ -146,3 +162,4 @@ include(GoogleTest)
 
 gtest_discover_tests(ProductTests)
 gtest_discover_tests(InventoryServiceTests)
+gtest_discover_tests(SQLiteProductRepositoryTests)
