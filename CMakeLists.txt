@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     InventoryManagement
-    VERSION 0.1.0
+    VERSION 0.2.0
     DESCRIPTION "Modern C++ inventory management system"
     LANGUAGES CXX
 )
@@ -16,6 +16,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # --------------------------------------------------
+# External dependencies
+# --------------------------------------------------
+
+find_package(SQLite3 REQUIRED)
+
+# --------------------------------------------------
 # Core library
 # --------------------------------------------------
 
@@ -24,12 +30,19 @@ add_library(
 
     src/models/Product.cpp
     src/services/InventoryService.cpp
+    src/repositories/SQLiteProductRepository.cpp
 )
 
 target_include_directories(
     inventory_core
     PUBLIC
         ${PROJECT_SOURCE_DIR}/include
+)
+
+target_link_libraries(
+    inventory_core
+    PRIVATE
+        SQLite::SQLite3
 )
 
 # --------------------------------------------------
